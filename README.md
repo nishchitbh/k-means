@@ -20,6 +20,7 @@ pip install numpy matplotlib pandas
 ```
 # Theory
 The K-means algorithm is an unsupervised machine learning technique for clustering data points into K distinct groups. It starts by randomly placing K centroids in the feature space and then iteratively assigns each data point to the cluster with the closest centroid. After each assignment, the centroids are updated based on the mean of the data points in each cluster. This process continues until convergence, resulting in K clusters where each cluster represents similar data points. K-means is widely used for tasks like customer segmentation and image compression.
+1[Figure for K-Means Algorithm](https://raw.githubusercontent.com/jacksparrow404/k-means/main/fig.png)
 # Getting Started
 1. Clone the repository
 ```
@@ -37,8 +38,7 @@ You can customize the code and experiment with different configurations:
 * Adjust the number of iterations by changing the value in the `range()` function within the `for` loop.
 * Customize the colors and markers used for the scatter plot and centroids in the `plt.scatter()` function calls.
 * Modify the file name and format of the resulting plot by changing the argument in the `plt.savefig()` function.
-
-
+* Modify the dataset by changing the values.
 
 
 
