@@ -32,7 +32,7 @@ plt.scatter(k2[0], k2[1], marker='D', color='green', label='Initial K2')
 # Main logic
 k1s = []
 k2s = []
-for i in range(150):  # 150 cycles of loop
+for i in range(40):  # 150 cycles of loop
     k1s = []
     k2s = []
     for j in a:
