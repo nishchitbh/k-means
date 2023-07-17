@@ -25,7 +25,7 @@ The K-means algorithm is an unsupervised machine learning technique for clusteri
 1. Clone the repository
 ```
 git clone https://github.com/jacksparrow404/k-means
-cd k-means-implementation
+cd k-means
 ```
 2. Run the 'main.py' script:
 ```
