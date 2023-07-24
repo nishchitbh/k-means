@@ -23,12 +23,12 @@ The K-means algorithm is an unsupervised machine learning technique for clusteri
 ![Figure for K-Means Algorithm](https://raw.githubusercontent.com/mr0bn0xi0us/k-means/main/fig.png)
 # Getting Started
 1. Clone the repository
-```
+```bash
 git clone https://github.com/jacksparrow404/k-means
 cd k-means
 ```
 2. Run the 'main.py' script:
-```
+```bash
 python main.py
 ```
 3.The script will generate a scatter plot of the dataset along with the initial and final positions of the cluster centroids. The resulting plot will be saved as `fig.png` in the current directory.
