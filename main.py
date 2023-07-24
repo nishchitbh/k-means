@@ -1,53 +1,50 @@
-# Importing libraries
 import json
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from copy import deepcopy
 
-
-def sqr_dist(a, b):  # Function for Distance
-    return ((b[0] - a[0]) ** 2) + ((b[1] - a[1]) ** 2)
-
-
-# Extracting dataset
 with open('dataset.json') as a:
     ds = json.load(a)
-a = np.array(ds['red'] + ds['blue'])
-df = pd.DataFrame(a, columns=['x', 'y'])
-print(df)
-xes = np.array(df['x'])
-yes = np.array(df['y'])
+dataset = np.array(ds['red'] + ds['blue'])
+clusters = int(input("Enter the number of clusters: "))
 
-# Randomly initializing cluster centroids
-k1 = np.random.randint(low=-50, high=50, size=(2,))
-k2 = np.random.randint(low=-50, high=50, size=(2,))
-print("Initial K1",k1)
-print("Initial K2",k2)
+random_indices = np.random.choice(len(dataset), clusters, replace=False)
+ks = dataset[random_indices]
+initial_ks = deepcopy(ks)
 
-# Initial plot
-plt.scatter(xes, yes, color='gray', label='Dataset')
-plt.scatter(k1[0], k1[1], marker='x', color='orange', label='Initial K1')
-plt.scatter(k2[0], k2[1], marker='D', color='green', label='Initial K2')
 
-# Main logic
-k1s = []
-k2s = []
-for i in range(40):  # 150 cycles of loop
-    k1s = []
-    k2s = []
-    for j in a:
-        if sqr_dist(j, k1) >= sqr_dist(j, k2):  # Assigning the dataset to cluster centroids
-            k2s.append(j)
-        else:
-            k1s.append(j)
+cluster_centroids = []
 
-    k1 = np.sum(np.array(k1s), axis=0) / len(k1s)
-    k2 = np.sum(np.array(k2s), axis=0) / len(k1s)
 
-print("Final k1", k1)
-print("Final k2", k2)
-plt.scatter(k1[0], k1[1], marker='x', color='red', label='Final K1')
-plt.scatter(k2[0], k2[1], marker='D', color='blue', label='Final K2')
-plt.legend()
-plt.savefig("fig.png")
+def nearest(clusters, data):
+    distances = list(map(np.linalg.norm, data-clusters))
+    return np.argmin(distances)
+
+
+for i in range(20):
+    assigned = {k: [] for k in range(clusters)}
+    ds = deepcopy(ks)
+    cluster_centroids.append(ds)
+    for data in dataset:
+        pos = nearest(ks, data)
+        assigned[pos].append(data)
+    for _ in range(clusters):
+        ks[_] = np.mean(assigned[_], axis=0)
+
+
+# Plotting
+cluster_centroids = np.array(cluster_centroids)
+for i in range(clusters):
+    plt.plot(cluster_centroids[:, i][:, 0],
+             cluster_centroids[:, i][:, 1], color='gray', marker='*')
+for a_ in assigned:
+    plt.scatter(np.array(assigned[a_])[:, 0], np.array(assigned[a_])[:, 1])
+for k1 in initial_ks:
+    plt.scatter(k1[0], k1[1], marker='x')
+for k_ in ks:
+    plt.scatter(k_[0], k_[1], marker='D')
+
+print("The final cluster centroids are: ", ks)
+plt.savefig('fig.png')
 plt.show()
