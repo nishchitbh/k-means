@@ -46,10 +46,10 @@ for d in dataset:
 cluster_centroids = np.array(cluster_centroids)
 for i in range(clusters):
     plt.plot(cluster_centroids[:, i][:, 0],
-             cluster_centroids[:, i][:, 1], color='gray', marker='*', zorder=0)
+             cluster_centroids[:, i][:, 1], color='gray', marker='*', zorder=1)
 for a_ in assigned_final:
     plt.scatter(np.array(assigned_final[a_])[:, 0],
-                np.array(assigned_final[a_])[:, 1], zorder=1)
+                np.array(assigned_final[a_])[:, 1], zorder=0)
 plt.scatter(initial_ks[:, 0], initial_ks[:, 1],
             marker='x', zorder=2, label='Initial Centroids', color='black')
 plt.scatter(ks[:, 0], ks[:, 1], marker='D', zorder=2,
