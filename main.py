@@ -13,7 +13,7 @@ random_indices = np.random.choice(len(dataset), clusters, replace=False)
 ks = dataset[random_indices]
 initial_ks = deepcopy(ks)
 cluster_centroids = []
-
+print("Initial cluster centroids:",initial_ks)
 
 # function for assigning the nearest points
 def nearest(clusters, data):
