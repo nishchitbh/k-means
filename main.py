@@ -32,17 +32,28 @@ for i in range(100):
     for _ in range(clusters):
         ks[_] = np.mean(assigned[_], axis=0)
 
+
+# Reassigning points for making points graph-ready
+assigned_final = {k: [] for k in range(clusters)}
+count = 1
+for d in dataset:
+    p = nearest(ks, d)
+    assigned_final[p].append(d)
+    count += 1
+
+
 # Plotting and data visualization
 cluster_centroids = np.array(cluster_centroids)
 for i in range(clusters):
     plt.plot(cluster_centroids[:, i][:, 0],
              cluster_centroids[:, i][:, 1], color='gray', marker='*', zorder=0)
-for a_ in assigned:
-    plt.scatter(np.array(assigned[a_])[:, 0],
-                np.array(assigned[a_])[:, 1], zorder=1)
+for a_ in assigned_final:
+    plt.scatter(np.array(assigned_final[a_])[:, 0],
+                np.array(assigned_final[a_])[:, 1], zorder=1)
 plt.scatter(initial_ks[:, 0], initial_ks[:, 1],
             marker='x', zorder=2, label='Initial Centroids', color='black')
-plt.scatter(ks[:, 0], ks[:, 1], marker='D', zorder=2, label='Final Centroids', color='black')
+plt.scatter(ks[:, 0], ks[:, 1], marker='D', zorder=2,
+            label='Final Centroids', color='black')
 print("The final cluster centroids are: ", ks)
 
 
