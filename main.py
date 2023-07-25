@@ -58,5 +58,6 @@ print("The final cluster centroids are: ", ks)
 
 
 plt.legend()
+plt.axis('scaled')
 plt.savefig('fig.png')
 plt.show()
