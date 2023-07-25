@@ -4,25 +4,25 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from copy import deepcopy
 
+# read dataset
 with open('dataset.json') as a:
     ds = json.load(a)
 dataset = np.array(ds['red'] + ds['blue'])
 clusters = int(input("Enter the number of clusters: "))
-
 random_indices = np.random.choice(len(dataset), clusters, replace=False)
 ks = dataset[random_indices]
 initial_ks = deepcopy(ks)
-
-
 cluster_centroids = []
 
 
+# function for assigning the nearest points
 def nearest(clusters, data):
     distances = list(map(np.linalg.norm, data-clusters))
     return np.argmin(distances)
 
 
-for i in range(20):
+# main loop
+for i in range(100):
     assigned = {k: [] for k in range(clusters)}
     ds = deepcopy(ks)
     cluster_centroids.append(ds)
@@ -32,19 +32,20 @@ for i in range(20):
     for _ in range(clusters):
         ks[_] = np.mean(assigned[_], axis=0)
 
-
-# Plotting
+# Plotting and data visualization
 cluster_centroids = np.array(cluster_centroids)
 for i in range(clusters):
     plt.plot(cluster_centroids[:, i][:, 0],
-             cluster_centroids[:, i][:, 1], color='gray', marker='*')
+             cluster_centroids[:, i][:, 1], color='gray', marker='*', zorder=0)
 for a_ in assigned:
-    plt.scatter(np.array(assigned[a_])[:, 0], np.array(assigned[a_])[:, 1])
-for k1 in initial_ks:
-    plt.scatter(k1[0], k1[1], marker='x')
-for k_ in ks:
-    plt.scatter(k_[0], k_[1], marker='D')
-
+    plt.scatter(np.array(assigned[a_])[:, 0],
+                np.array(assigned[a_])[:, 1], zorder=1)
+plt.scatter(initial_ks[:, 0], initial_ks[:, 1],
+            marker='x', zorder=2, label='Initial Centroids', color='black')
+plt.scatter(ks[:, 0], ks[:, 1], marker='D', zorder=2, label='Final Centroids', color='black')
 print("The final cluster centroids are: ", ks)
+
+
+plt.legend()
 plt.savefig('fig.png')
 plt.show()
